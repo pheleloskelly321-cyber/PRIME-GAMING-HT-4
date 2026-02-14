@@ -23,8 +23,8 @@
         .profile-img-container:hover .edit-overlay { opacity: 1; }
 
         /* Style pou Chat Messages */
-        .msg-mine { background: #2563eb; border-radius: 1.2rem 1.2rem 0 1.2rem; align-self: flex-end; }
-        .msg-other { background: #1f2937; border-radius: 1.2rem 1.2rem 1.2rem 0; align-self: flex-start; }
+        .msg-mine { background: #2563eb; border-radius: 1.2rem 0 1.2rem 1.2rem; }
+        .msg-other { background: #1f2937; border-radius: 0 1.2rem 1.2rem 1.2rem; }
     </style>
 </head>
 <body>
@@ -117,7 +117,7 @@
     <div id="chat-modal" class="hidden fixed inset-0 z-[200] flex flex-col modal-bg animate__animated animate__slideInUp">
         <header class="p-6 flex justify-between items-center border-b border-white/10">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-black italic text-white">P</div>
+                <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-black italic text-white shadow-lg">P</div>
                 <div>
                     <h2 class="text-sm font-black uppercase tracking-widest">Chat Global</h2>
                     <p class="text-[9px] text-green-500 font-bold uppercase">An liy kounye a</p>
@@ -127,7 +127,7 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </header>
-        <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-4 no-scrollbar flex flex-col"></div>
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-6 no-scrollbar flex flex-col"></div>
         <div class="p-6 border-t border-white/10 bg-black/50">
             <div class="flex gap-2 bg-white/5 p-2 rounded-[2rem] border border-white/10 focus-within:border-blue-500 transition-all">
                 <input type="text" id="chat-input" placeholder="Ekri yon mesaj..." class="flex-1 bg-transparent px-4 py-2 outline-none text-sm">
@@ -259,7 +259,7 @@
             });
         }
 
-        // --- SISTEM CHAT ---
+        // --- SISTEM CHAT MODIFIE ---
         function loadChatMessages() {
             const chatQuery = query(ref(db, 'chat'), limitToLast(50));
             onValue(chatQuery, (snap) => {
@@ -270,11 +270,18 @@
                     Object.keys(data).forEach(id => {
                         const m = data[id];
                         const isMine = m.sender_id === auth.currentUser.uid;
+                        
+                        // Default pfp si pa genyen
+                        const pfp = m.sender_pfp || "https://res.cloudinary.com/dcpcbglsw/image/upload/v1770997001/c74e5bf57d250c1bfc7b0d96f39f42c7_wkpgqd.jpg";
+
                         chatBox.innerHTML += `
-                            <div class="flex flex-col ${isMine ? 'items-end' : 'items-start'} animate__animated animate__fadeInUp animate__faster">
-                                <span class="text-[9px] text-gray-500 font-bold mb-1 px-2 uppercase">${isMine ? 'Mwen' : m.sender_name}</span>
-                                <div class="p-3 max-w-[85%] text-sm ${isMine ? 'msg-mine' : 'msg-other'}">
-                                    ${m.text}
+                            <div class="flex items-end gap-2 ${isMine ? 'flex-row-reverse' : ''} animate__animated animate__fadeInUp animate__faster">
+                                <img src="${pfp}" class="w-8 h-8 rounded-full border border-blue-500 object-cover shadow-md">
+                                <div class="flex flex-col ${isMine ? 'items-end' : 'items-start'} max-w-[75%]">
+                                    <span class="text-[9px] text-gray-500 font-black mb-1 px-1 uppercase tracking-tighter">${m.sender_name}</span>
+                                    <div class="p-3 text-sm leading-tight shadow-lg ${isMine ? 'msg-mine' : 'msg-other text-gray-200'}">
+                                        ${m.text}
+                                    </div>
                                 </div>
                             </div>
                         `;
@@ -288,16 +295,21 @@
             const input = document.getElementById('chat-input');
             const text = input.value.trim();
             if (!text) return;
+            
+            // Nou voye text, non, id, ak PHOTO tou!
+            const pfp = currentUserData.profilePic || "https://res.cloudinary.com/dcpcbglsw/image/upload/v1770997001/c74e5bf57d250c1bfc7b0d96f39f42c7_wkpgqd.jpg";
+            
             input.value = "";
             await push(ref(db, 'chat'), {
                 sender_id: auth.currentUser.uid,
                 sender_name: currentUserData.username,
+                sender_pfp: pfp,
                 text: text,
                 timestamp: serverTimestamp()
             });
         };
 
-        // --- CHALLENGES & OT KONPÒTMAN ---
+        // --- CHALLENGES ---
         window.cancelChallenge = async (id, amount) => {
             if (confirm("Èske ou vle anile defi sa?")) {
                 await remove(ref(db, `challenges/${id}`));
