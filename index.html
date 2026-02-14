@@ -22,7 +22,6 @@
 
         .profile-img-container:hover .edit-overlay { opacity: 1; }
 
-        /* Style pou Chat Messages */
         .msg-mine { background: #2563eb; border-radius: 1.2rem 0 1.2rem 1.2rem; }
         .msg-other { background: #1f2937; border-radius: 0 1.2rem 1.2rem 1.2rem; }
     </style>
@@ -33,7 +32,7 @@
         <div class="glass-card p-8 rounded-[2rem] w-full max-w-md animate__animated animate__fadeIn">
             <div class="text-center mb-8">
                 <img src="https://res.cloudinary.com/dcpcbglsw/image/upload/v1770997001/c74e5bf57d250c1bfc7b0d96f39f42c7_wkpgqd.jpg" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-blue-500 shadow-lg object-cover">
-                <h1 class="text-2xl font-black italic text-blue-500 tracking-tighter uppercase tracking-widest">Prisme</h1>
+                <h1 class="text-2xl font-black italic text-blue-500 tracking-tighter uppercase">Prisme</h1>
                 <p id="mode-title" class="text-gray-500 text-[10px] font-bold uppercase mt-1 tracking-widest">Koneksyon</p>
             </div>
             <div class="space-y-4">
@@ -54,7 +53,7 @@
 
     <section id="home-page" class="page pb-24">
         <header class="p-4 flex justify-between items-center sticky top-0 bg-[#0b0e14]/95 backdrop-blur-md z-50 border-b border-white/5">
-            <h1 class="text-xl font-black italic text-blue-500 tracking-tighter">PRISME</h1>
+            <h1 class="text-xl font-black italic text-blue-500 tracking-tighter uppercase">PRISME</h1>
             <div class="bg-blue-900/20 px-4 py-2 rounded-full border border-blue-500/30 flex items-center gap-2">
                 <span id="user-balance" class="font-bold text-green-400">0</span>
                 <span class="text-[10px] font-bold text-blue-300">HTG</span>
@@ -76,7 +75,7 @@
                     </label>
                     <input type="file" id="upload-profile" class="hidden" accept="image/*">
                 </div>
-                <h2 id="display-username" class="mt-4 text-2xl font-black italic uppercase">Itilizatè</h2>
+                <h2 id="display-username" class="mt-4 text-2xl font-black italic uppercase italic">Itilizatè</h2>
                 
                 <div class="flex gap-4 mt-6 w-full max-w-xs">
                     <button onclick="toggleModal('deposit-modal', true)" class="flex-1 bg-green-600 hover:bg-green-700 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-green-900/20 active:scale-95 transition-all">Depo</button>
@@ -125,6 +124,7 @@
             
             <div class="space-y-3 bg-black/40 p-4 rounded-3xl border border-white/5 mb-6">
                 <div class="flex justify-between items-center"><span class="text-[10px] text-gray-500 font-black uppercase">Jwèt:</span> <span id="join-game" class="text-xs font-bold text-white uppercase italic">--</span></div>
+                <div class="flex justify-between items-center"><span class="text-[10px] text-gray-500 font-black uppercase">Tip:</span> <span id="join-type" class="text-xs font-bold text-blue-400">--</span></div>
                 <div class="flex justify-between items-center"><span class="text-[10px] text-gray-500 font-black uppercase">Miz:</span> <span id="join-amount" class="text-sm font-black text-green-400">--</span></div>
                 <div class="flex justify-between items-center"><span class="text-[10px] text-gray-500 font-black uppercase">Kreyatè:</span> <span id="join-creator" class="text-xs text-blue-400 font-bold">--</span></div>
                 <div class="flex justify-between items-center"><span class="text-[10px] text-gray-500 font-black uppercase">ID Room:</span> <span id="join-room" class="text-xs font-bold text-white">--</span></div>
@@ -141,6 +141,39 @@
             <div class="space-y-3">
                 <button id="confirm-join-btn" class="w-full bg-blue-600 hover:bg-blue-700 py-4 rounded-2xl font-black text-xs uppercase shadow-lg active:scale-95 transition-all">AKSEPTE DEFI A</button>
                 <button onclick="toggleModal('join-modal', false)" class="w-full text-gray-500 text-[10px] font-bold uppercase py-2">Anile</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="bet-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 modal-bg">
+        <div class="glass-card w-full max-w-sm p-6 rounded-[2.5rem] animate__animated animate__zoomIn">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-black italic text-blue-500 uppercase">Lage yon defi</h2>
+                <button onclick="toggleModal('bet-modal', false)" class="text-gray-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+            </div>
+            <div class="space-y-3 no-scrollbar overflow-y-auto max-h-[70vh]">
+                <select id="bet-game" onchange="updateGameOptions()" class="w-full p-4 rounded-2xl input-field text-sm">
+                    <option value="Free Fire">Free Fire</option>
+                    <option value="CODM">CODM</option>
+                    <option value="PUBG Mobile">PUBG Mobile</option>
+                    <option value="Blood Strike">Blood Strike</option>
+                    <option value="DLS">DLS (Dream League)</option>
+                </select>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <select id="bet-type-1" class="p-4 rounded-2xl input-field text-[11px] font-bold uppercase">
+                        </select>
+                    <select id="bet-type-2" class="p-4 rounded-2xl input-field text-[11px] font-bold uppercase">
+                        </select>
+                </div>
+
+                <input type="text" id="bet-uid" placeholder="ID Jwèt ou (UID)" class="w-full p-4 rounded-2xl input-field text-sm">
+                <input type="text" id="bet-room" placeholder="ID Room" class="w-full p-4 rounded-2xl input-field text-sm">
+                <input type="text" id="bet-room-pass" placeholder="Modpas Room (Si pa genyen, kitel vid)" class="w-full p-4 rounded-2xl input-field text-sm border-blue-400/30">
+                <input type="number" id="bet-amount" placeholder="Montan HTG (Min 100)" class="w-full p-4 rounded-2xl input-field text-sm">
+                <textarea id="bet-rules" placeholder="Règleman defi a..." class="w-full p-4 rounded-2xl input-field text-sm h-20"></textarea>
+                
+                <button id="confirm-bet-btn" class="w-full bg-blue-600 py-4 rounded-2xl font-black shadow-lg active:scale-95 transition-all uppercase text-xs">Pibliye Defi</button>
             </div>
         </div>
     </div>
@@ -201,30 +234,6 @@
         </div>
     </div>
 
-    <div id="bet-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 modal-bg">
-        <div class="glass-card w-full max-w-sm p-6 rounded-[2.5rem] animate__animated animate__zoomIn">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-black italic text-blue-500 uppercase">Lage yon defi</h2>
-                <button onclick="toggleModal('bet-modal', false)" class="text-gray-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
-            </div>
-            <div class="space-y-3 no-scrollbar overflow-y-auto max-h-[70vh]">
-                <select id="bet-game" class="w-full p-4 rounded-2xl input-field text-sm">
-                    <option value="Free Fire">Free Fire</option>
-                    <option value="CODM">CODM</option>
-                    <option value="PUBG">PUBG</option>
-                    <option value="Blood Strike">Blood Strike</option>
-                    <option value="DLS">DLS (Dream League)</option>
-                </select>
-                <input type="text" id="bet-uid" placeholder="ID Jwèt ou (UID)" class="w-full p-4 rounded-2xl input-field text-sm">
-                <input type="text" id="bet-room" placeholder="ID Room" class="w-full p-4 rounded-2xl input-field text-sm">
-                <input type="text" id="bet-room-pass" placeholder="Modpas Room (Si pa genyen, kitel vid)" class="w-full p-4 rounded-2xl input-field text-sm border-blue-400/30">
-                <input type="number" id="bet-amount" placeholder="Montan HTG (Min 100)" class="w-full p-4 rounded-2xl input-field text-sm">
-                <textarea id="bet-rules" placeholder="Règleman defi a..." class="w-full p-4 rounded-2xl input-field text-sm h-20"></textarea>
-                <button id="confirm-bet-btn" class="w-full bg-blue-600 py-4 rounded-2xl font-black shadow-lg active:scale-95 transition-all uppercase text-xs">Pibliye Defi</button>
-            </div>
-        </div>
-    </div>
-
     <nav id="bottom-nav" class="hidden fixed bottom-0 left-0 right-0 h-22 bg-[#0b0e14]/95 border-t border-white/5 flex justify-around items-center px-6 z-50 backdrop-blur-lg">
         <button onclick="switchPage('home-page')" id="nav-home" class="flex flex-col items-center gap-1">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -259,7 +268,45 @@
 
         let currentUserData = null;
         let isSignup = false;
-        let currentChallengeId = null; // Pou kenbe id defi ki chwazi a
+        let currentChallengeId = null;
+
+        // --- KONFIGIRASYON OPSYON JWÈT ---
+        const gameOptions = {
+            "Free Fire": {
+                types1: ["1v1", "2v2", "3v3", "4v4"],
+                types2: ["Room Battle Royal", "Room Clash Squad", "Todo Rojo"]
+            },
+            "CODM": {
+                types1: ["1v1", "2v2", "5v5"],
+                types2: ["Multiplayer", "Battle Royal", "Snipers Only"]
+            },
+            "PUBG Mobile": {
+                types1: ["1v1", "2v2", "4v4"],
+                types2: ["TDM Warehouse", "Classic Room", "Sniper Training"]
+            },
+            "Blood Strike": {
+                types1: ["1v1", "2v2", "4v4"],
+                types2: ["Battle Royal", "Squad Fight", "Hot Zone"]
+            },
+            "DLS": {
+                types1: ["1v1"],
+                types2: ["Friendly Match", "Tournament Style"]
+            }
+        };
+
+        window.updateGameOptions = () => {
+            const game = document.getElementById('bet-game').value;
+            const t1 = document.getElementById('bet-type-1');
+            const t2 = document.getElementById('bet-type-2');
+            
+            const options = gameOptions[game];
+            
+            t1.innerHTML = options.types1.map(opt => `<option value="${opt}">${opt}</option>`).join('');
+            t2.innerHTML = options.types2.map(opt => `<option value="${opt}">${opt}</option>`).join('');
+        };
+
+        // Inisyalize opsyon yo lè paj la chaje
+        updateGameOptions();
 
         onAuthStateChanged(auth, (user) => {
             if (user && user.emailVerified) {
@@ -291,7 +338,6 @@
             });
         }
 
-        // --- SISTEM CHAT MODIFIE ---
         function loadChatMessages() {
             const chatQuery = query(ref(db, 'chat'), limitToLast(50));
             onValue(chatQuery, (snap) => {
@@ -334,7 +380,6 @@
             });
         };
 
-        // --- CHALLENGES ---
         window.openChallengeDetails = (id) => {
             currentChallengeId = id;
             onValue(ref(db, `challenges/${id}`), (snap) => {
@@ -342,12 +387,12 @@
                 if(!c) return;
                 
                 document.getElementById('join-game').innerText = c.game;
+                document.getElementById('join-type').innerText = `${c.type1} | ${c.type2}`;
                 document.getElementById('join-amount').innerText = c.bet_amount + " HTG";
                 document.getElementById('join-creator').innerText = c.creator_name;
                 document.getElementById('join-room').innerText = c.room_id;
                 document.getElementById('join-rules').innerText = c.rules;
 
-                // LOJIK MODPAS: Si gen modpas, parèt li, si pa genyen kache l
                 const passContainer = document.getElementById('join-pass-container');
                 if (c.room_pass && c.room_pass.trim() !== "") {
                     document.getElementById('join-pass').innerText = c.room_pass;
@@ -362,8 +407,6 @@
 
         document.getElementById('confirm-join-btn').onclick = async () => {
             if(!currentChallengeId) return;
-            
-            // Verifikasyon dènye minit nan DB
             const snap = await get(ref(db, `challenges/${currentChallengeId}`));
             const challenge = snap.val();
 
@@ -379,14 +422,12 @@
             }
 
             try {
-                // Aksepte defi a
                 await update(ref(db, `challenges/${currentChallengeId}`), {
                     status: "accepted",
                     player2_id: auth.currentUser.uid,
                     player2_name: currentUserData.username
                 });
 
-                // Retire kòb la nan balans ou
                 await update(ref(db, `users/${auth.currentUser.uid}`), {
                     balance: currentUserData.balance - challenge.bet_amount,
                     escrow: (currentUserData.escrow || 0) + challenge.bet_amount
@@ -425,7 +466,8 @@
                                             <span class="w-2 h-2 ${isMine ? 'bg-yellow-500' : 'bg-green-500'} rounded-full"></span>
                                             <h4 class="font-black text-blue-400 italic text-sm uppercase">${c.game}</h4>
                                         </div>
-                                        <p class="text-[10px] text-gray-500 font-bold uppercase">Pa: ${isMine ? 'Mwen' : c.creator_name}</p>
+                                        <p class="text-[9px] text-gray-500 font-bold uppercase">${c.type1} • ${c.type2}</p>
+                                        <p class="text-[10px] text-gray-500 font-bold uppercase mt-1">Pa: ${isMine ? 'Mwen' : c.creator_name}</p>
                                     </div>
                                     <p class="text-xl font-black text-green-400">${c.bet_amount} <span class="text-[10px]">HTG</span></p>
                                 </div>
@@ -444,6 +486,8 @@
 
         document.getElementById('confirm-bet-btn').onclick = async () => {
             const game = document.getElementById('bet-game').value;
+            const type1 = document.getElementById('bet-type-1').value;
+            const type2 = document.getElementById('bet-type-2').value;
             const amount = parseInt(document.getElementById('bet-amount').value);
             const rules = document.getElementById('bet-rules').value.trim();
             const playerUid = document.getElementById('bet-uid').value.trim();
@@ -459,6 +503,8 @@
                     creator_id: auth.currentUser.uid,
                     creator_name: currentUserData.username,
                     game,
+                    type1,
+                    type2,
                     player_uid: playerUid,
                     room_id: roomId,
                     room_pass: roomPass,
