@@ -23,14 +23,14 @@
         .profile-img-container:hover .edit-overlay { opacity: 1; }
 
         /* Style pou Chat Messages */
-        .msg-mine { background: #2563eb; border-radius: 1.2rem 1.2rem 0 1.2rem; align-self: flex-end; border-bottom-right-radius: 4px; }
-        .msg-other { background: #1f2937; border-radius: 1.2rem 1.2rem 1.2rem 0; align-self: flex-start; border-bottom-left-radius: 4px; }
+        .msg-mine { background: #2563eb; border-radius: 1.2rem 1.2rem 0 1.2rem; align-self: flex-end; }
+        .msg-other { background: #1f2937; border-radius: 1.2rem 1.2rem 1.2rem 0; align-self: flex-start; }
     </style>
 </head>
 <body>
 
     <section id="auth-page" class="page flex-active items-center justify-center p-4 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-black to-black">
-        <div class="glass-card p-8 rounded-[2rem] w-full max-w-md animate__animated animate__fadeIn">
+        <div class="glass-card p-8 rounded-[2rem] w-full max-md animate__animated animate__fadeIn">
             <div class="text-center mb-8">
                 <img src="https://res.cloudinary.com/dcpcbglsw/image/upload/v1770997001/c74e5bf57d250c1bfc7b0d96f39f42c7_wkpgqd.jpg" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-blue-500 shadow-lg object-cover">
                 <h1 class="text-2xl font-black italic text-blue-500 tracking-tighter uppercase tracking-widest">Prisme</h1>
@@ -102,20 +102,24 @@
     <div id="chat-modal" class="hidden fixed inset-0 z-[200] flex flex-col modal-bg animate__animated animate__slideInUp">
         <header class="p-6 flex justify-between items-center border-b border-white/10">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-black italic">P</div>
+                <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-black italic text-white">P</div>
                 <div>
                     <h2 class="text-sm font-black uppercase tracking-widest">Chat Global</h2>
-                    <p class="text-[9px] text-green-500 font-bold uppercase">Prisme Kominote</p>
+                    <p class="text-[9px] text-green-500 font-bold uppercase">An liy kounye a</p>
                 </div>
             </div>
-            <button onclick="toggleModal('chat-modal', false)" class="bg-white/5 p-3 rounded-full text-gray-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+            <button onclick="toggleModal('chat-modal', false)" class="bg-white/5 p-3 rounded-full text-gray-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
         </header>
-        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar flex flex-col">
+
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-4 no-scrollbar flex flex-col">
             </div>
+
         <div class="p-6 border-t border-white/10 bg-black/50">
             <div class="flex gap-2 bg-white/5 p-2 rounded-[2rem] border border-white/10 focus-within:border-blue-500 transition-all">
                 <input type="text" id="chat-input" placeholder="Ekri yon mesaj..." class="flex-1 bg-transparent px-4 py-2 outline-none text-sm">
-                <button id="send-msg-btn" class="bg-blue-600 p-3 rounded-full shadow-lg active:scale-90 transition-all">
+                <button id="send-msg-btn" class="bg-blue-600 p-3 rounded-full shadow-lg shadow-blue-600/20 active:scale-90 transition-all">
                     <svg class="w-5 h-5 rotate-90" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                 </button>
             </div>
@@ -124,6 +128,7 @@
 
     <button id="floating-chat-btn" onclick="toggleModal('chat-modal', true)" class="hidden fixed bottom-24 right-6 w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-2xl z-40 animate__animated animate__bounceIn">
         <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+        <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-[#0b0e14]"></span>
     </button>
 
     <div id="deposit-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 modal-bg">
@@ -195,7 +200,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getDatabase, ref, set, onValue, push, serverTimestamp, update, remove, limitToLast, query } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, set, onValue, push, serverTimestamp, update, remove, query, limitToLast } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCHVG_0BCd0V_lFSmg3_2qyC5rKclG-b0M",
@@ -218,7 +223,7 @@
                 switchPage('home-page');
                 syncUserData(user.uid);
                 loadChallenges();
-                loadChatMessages();
+                loadChatMessages(); // Chaje mesaj chat yo
                 document.getElementById('floating-chat-btn').classList.remove('hidden');
             } else { 
                 switchPage('auth-page');
@@ -243,7 +248,7 @@
             });
         }
 
-        // --- CHAT SYSTEM (WITH PROFILE PIC) ---
+        // --- CHAT SYSTEM ---
         function loadChatMessages() {
             const chatQuery = query(ref(db, 'global_chat'), limitToLast(50));
             onValue(chatQuery, (snap) => {
@@ -254,18 +259,14 @@
                     Object.keys(data).forEach(id => {
                         const m = data[id];
                         const isMine = m.sender_id === auth.currentUser.uid;
-                        const defaultImg = "https://res.cloudinary.com/dcpcbglsw/image/upload/v1770997001/c74e5bf57d250c1bfc7b0d96f39f42c7_wkpgqd.jpg";
-                        
                         chatBox.innerHTML += `
-                        <div class="flex items-end gap-2 ${isMine ? 'flex-row-reverse' : 'flex-row'} animate__animated animate__fadeInUp animate__faster">
-                            <img src="${m.sender_pic || defaultImg}" class="w-8 h-8 rounded-full border border-blue-500/30 object-cover shadow-sm">
-                            <div class="flex flex-col ${isMine ? 'items-end' : 'items-start'} max-w-[75%]">
-                                <span class="text-[8px] text-gray-500 font-bold mb-1 px-1 uppercase">${isMine ? 'Mwen' : m.sender_name}</span>
-                                <div class="p-3 text-sm shadow-lg ${isMine ? 'msg-mine' : 'msg-other'}">
+                            <div class="flex flex-col ${isMine ? 'items-end' : 'items-start'} animate__animated animate__fadeInUp animate__faster">
+                                <span class="text-[9px] text-gray-500 font-bold mb-1 ml-2 mr-2 uppercase">${isMine ? 'Mwen' : m.sender_name}</span>
+                                <div class="p-3 max-w-[85%] text-sm ${isMine ? 'msg-mine' : 'msg-other'}">
                                     ${m.text}
                                 </div>
                             </div>
-                        </div>`;
+                        `;
                     });
                     chatBox.scrollTop = chatBox.scrollHeight;
                 }
@@ -275,18 +276,14 @@
         document.getElementById('send-msg-btn').onclick = async () => {
             const input = document.getElementById('chat-input');
             const text = input.value.trim();
-            if (!text || !currentUserData) return;
-            
+            if (!text) return;
             input.value = "";
-            try {
-                await push(ref(db, 'global_chat'), {
-                    sender_id: auth.currentUser.uid,
-                    sender_name: currentUserData.username,
-                    sender_pic: currentUserData.profilePic || "",
-                    text: text,
-                    timestamp: serverTimestamp()
-                });
-            } catch (e) { console.error(e); }
+            await push(ref(db, 'global_chat'), {
+                sender_id: auth.currentUser.uid,
+                sender_name: currentUserData.username,
+                text: text,
+                timestamp: serverTimestamp()
+            });
         };
 
         // --- CHALLENGES ---
@@ -381,20 +378,6 @@
             if(show) { el.classList.remove('hidden'); } else { el.classList.add('hidden'); }
         };
 
-        document.getElementById('save-profile-btn').onclick = async () => {
-            await update(ref(db, `users/${auth.currentUser.uid}`), {
-                username: document.getElementById('edit-username').value,
-                phone: document.getElementById('edit-phone').value
-            });
-            alert("Sove!");
-        };
-
-        document.getElementById('upload-profile').onchange = (e) => {
-            const reader = new FileReader();
-            reader.onloadend = async () => await update(ref(db, `users/${auth.currentUser.uid}`), { profilePic: reader.result });
-            if (e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
-        };
-
         document.getElementById('main-btn').onclick = async () => {
             const email = document.getElementById('email').value.trim();
             const pass = document.getElementById('password').value;
@@ -403,7 +386,7 @@
                     const res = await createUserWithEmailAndPassword(auth, email, pass);
                     await set(ref(db, `users/${res.user.uid}`), {
                         username: document.getElementById('username').value, phone: document.getElementById('phone').value,
-                        balance: 0, wins: 0, losses: 0, escrow: 0, totalTransactions: 0, profilePic: ""
+                        balance: 0, wins: 0, losses: 0, escrow: 0, totalTransactions: 0
                     });
                     await sendEmailVerification(res.user);
                     alert("Verifye email ou!");
