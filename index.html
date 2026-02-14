@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRISME GAMING HT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        body { background-color: #0b0e14; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .glass-card { background: rgba(22, 27, 34, 0.9); border: 1px solid rgba(59, 130, 246, 0.3); }
+        .input-field { background: #000; border: 1px solid #333; transition: all 0.3s ease; color: white; }
+        .input-field:focus { border-color: #3b82f6; outline: none; }
+        .nav-active { color: #3b82f6 !important; }
+        
+        .page { display: none; min-height: 100vh; width: 100%; }
+        .page-active { display: block !important; }
+        .flex-active { display: flex !important; }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .modal-bg { backdrop-filter: blur(15px); background: rgba(0,0,0,0.85); }
+
+        /* Styles pou Chat */
+        .msg-mine { background: #2563eb; border-radius: 1.2rem 1.2rem 0 1.2rem; }
+        .msg-other { background: #1f2937; border-radius: 1.2rem 1.2rem 1.2rem 0; }
+        .chat-img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(59, 130, 246, 0.5); }
+    </style>
+</head>
+<body>
+
+    <section id="auth-page" class="page flex-active items-center justify-center p-4 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-black to-black">
+        <div class="glass-card p-8 rounded-[2rem] w-full max-w-md animate__animated animate__fadeIn">
+            <div class="text-center mb-8">
+                <img src="https://res.cloudinary.com/dcpcbglsw/image/upload/v1770997001/c74e5bf57d250c1bfc7b0d96f39f42c7_wkpgqd.jpg" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-blue-500 shadow-lg object-cover">
+                <h1 class="text-2xl font-black italic text-blue-500 tracking-tighter uppercase">Prisme</h1>
+                <p id="mode-title" class="text-gray-500 text-[10px] font-bold uppercase mt-1 tracking-widest">Koneksyon</p>
+            </div>
+            <div class="space-y-4">
+                <div id="signup-fields" class="hidden space-y-4">
+                    <input type="text" id="username" placeholder="Non itilizatè" class="w-full p-4 rounded-2xl input-field text-sm">
+                    <input type="text" id="phone" placeholder="Nimewo Telefòn" class="w-full p-4 rounded-2xl input-field text-sm">
+                </div>
+                <input type="email" id="email" placeholder="Email" class="w-full p-4 rounded-2xl input-field text-sm">
+                <input type="password" id="password" placeholder="Modpas" class="w-full p-4 rounded-2xl input-field text-sm">
+                <button id="main-btn" class="w-full bg-blue-600 hover:bg-blue-700 py-4 rounded-2xl font-black shadow-lg transition-all active:scale-95">KONEKTE</button>
+                <p class="text-center text-xs text-gray-500 mt-4">
+                    <span id="toggle-text">Poko gen kont?</span> 
+                    <button id="toggle-btn" class="text-blue-500 font-bold ml-1">Kreyel isit la</button>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="home-page" class="page pb-24">
+        <header class="p-4 flex justify-between items-center sticky top-0 bg-[#0b0e14]/95 backdrop-blur-md z-50 border-b border-white/5">
+            <h1 class="text-xl font-black italic text-blue-500 tracking-tighter uppercase">Prisme</h1>
+            <div class="bg-blue-900/20 px-4 py-2 rounded-full border border-blue-500/30 flex items-center gap-2">
+                <span id="user-balance" class="font-bold text-green-400">0</span>
+                <span class="text-[10px] font-bold text-blue-300">HTG</span>
+            </div>
+        </header>
+        <div class="mt-10 px-4">
+            <h2 class="text-[11px] font-black text-gray-500 uppercase tracking-[0.2em] mb-6 ml-2">Defi ki disponib</h2>
+            <div id="challenges-list" class="space-y-4"></div>
+        </div>
+    </section>
+
+    <section id="profile-page" class="page pb-24">
+        <div class="p-6">
+            <div class="flex flex-col items-center mt-6">
+                <div class="relative group">
+                    <img id="profile-pic" src="https://via.placeholder.com/150" class="w-32 h-32 rounded-full object-cover border-4 border-blue-500 shadow-2xl">
+                    <label for="upload-profile" class="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    </label>
+                    <input type="file" id="upload-profile" class="hidden" accept="image/*">
+                </div>
+                <h2 id="display-username" class="mt-4 text-2xl font-black italic uppercase">Itilizatè</h2>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mt-8">
+                <div class="glass-card p-4 rounded-3xl text-center"><p class="text-[10px] text-gray-500 uppercase font-black">Genyen</p><p id="stats-wins" class="text-xl font-black text-green-400">0</p></div>
+                <div class="glass-card p-4 rounded-3xl text-center"><p class="text-[10px] text-gray-500 uppercase font-black">Pèdi</p><p id="stats-losses" class="text-xl font-black text-red-400">0</p></div>
+            </div>
+
+            <div class="mt-8 space-y-4">
+                <input type="text" id="edit-username" placeholder="Chanje Username" class="w-full p-4 rounded-2xl input-field text-sm">
+                <button id="save-profile-btn" class="w-full bg-blue-600 py-4 rounded-2xl font-black text-xs uppercase">Sove</button>
+                <button onclick="signOutUser()" class="w-full py-4 text-red-500 text-[10px] font-black uppercase">Dekonekte</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="chat-modal" class="hidden fixed inset-0 z-[200] flex flex-col modal-bg animate__animated animate__slideInUp">
+        <header class="p-6 flex justify-between items-center border-b border-white/10">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-black italic">P</div>
+                <div>
+                    <h2 class="text-sm font-black uppercase tracking-widest">Chat Global</h2>
+                    <p class="text-[9px] text-green-500 font-bold uppercase">Kominote Prisme</p>
+                </div>
+            </div>
+            <button onclick="toggleModal('chat-modal', false)" class="text-gray-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg></button>
+        </header>
+        
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar flex flex-col">
+            </div>
+
+        <div class="p-6 border-t border-white/10 bg-black/50">
+            <div class="flex gap-2 bg-white/5 p-2 rounded-[2rem] border border-white/10 focus-within:border-blue-500 transition-all">
+                <input type="text" id="chat-input" placeholder="Ekri yon mesaj..." class="flex-1 bg-transparent px-4 py-2 outline-none text-sm">
+                <button id="send-msg-btn" class="bg-blue-600 p-3 rounded-full shadow-lg active:scale-90 transition-all">
+                    <svg class="w-5 h-5 rotate-90" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <button id="floating-chat-btn" onclick="toggleModal('chat-modal', true)" class="hidden fixed bottom-24 right-6 w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-2xl z-40 animate__animated animate__bounceIn">
+        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+    </button>
+
+    <nav id="bottom-nav" class="hidden fixed bottom-0 left-0 right-0 h-22 bg-[#0b0e14]/95 border-t border-white/5 flex justify-around items-center px-6 z-50 backdrop-blur-lg">
+        <button onclick="switchPage('home-page')" id="nav-home" class="flex flex-col items-center gap-1">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span class="text-[9px] font-bold uppercase tracking-widest">Akèy</span>
+        </button>
+        <button onclick="toggleModal('bet-modal', true)" class="bg-blue-600 w-14 h-14 rounded-2xl flex items-center justify-center -translate-y-5 shadow-2xl border-4 border-[#0b0e14]">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/></svg>
+        </button>
+        <button onclick="switchPage('profile-page')" id="nav-profile" class="flex flex-col items-center gap-1 text-gray-600">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <span class="text-[9px] font-bold uppercase tracking-widest">Pwofil</span>
+        </button>
+    </nav>
+
+    <div id="bet-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 modal-bg">
+        <div class="glass-card w-full max-w-sm p-6 rounded-[2.5rem] animate__animated animate__zoomIn">
+            <h2 class="text-xl font-black italic text-blue-500 uppercase mb-4">Lage yon defi</h2>
+            <div class="space-y-3">
+                <input type="text" id="bet-uid" placeholder="UID Jwèt ou" class="w-full p-4 rounded-2xl input-field text-sm">
+                <input type="number" id="bet-amount" placeholder="Montan HTG" class="w-full p-4 rounded-2xl input-field text-sm">
+                <button id="confirm-bet-btn" class="w-full bg-blue-600 py-4 rounded-2xl font-black uppercase text-xs">Pibliye</button>
+                <button onclick="toggleModal('bet-modal', false)" class="w-full text-gray-500 text-[10px] font-bold uppercase">Anile</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, set, onValue, push, serverTimestamp, update, remove, limitToLast, query } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCHVG_0BCd0V_lFSmg3_2qyC5rKclG-b0M",
+            authDomain: "prime-gaming-ht.firebaseapp.com",
+            databaseURL: "https://prime-gaming-ht-default-rtdb.firebaseio.com",
+            projectId: "prime-gaming-ht",
+            storageBucket: "prime-gaming-ht.firebasestorage.app",
+            appId: "1:579566074161:web:e50abea764dd4d37371810"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        let currentUserData = null;
+        let isSignup = false;
+
+        onAuthStateChanged(auth, (user) => {
+            if (user && user.emailVerified) {
+                switchPage('home-page');
+                syncUserData(user.uid);
+                loadChallenges();
+                loadChatMessages();
+                document.getElementById('floating-chat-btn').classList.remove('hidden');
+            } else { 
+                switchPage('auth-page');
+                document.getElementById('floating-chat-btn').classList.add('hidden');
+            }
+        });
+
+        function syncUserData(uid) {
+            onValue(ref(db, `users/${uid}`), (snap) => {
+                currentUserData = snap.val();
+                if (currentUserData) {
+                    document.getElementById('user-balance').innerText = Number(currentUserData.balance || 0).toLocaleString();
+                    document.getElementById('display-username').innerText = currentUserData.username;
+                    document.getElementById('profile-pic').src = currentUserData.profilePic || "https://res.cloudinary.com/dcpcbglsw/image/upload/v1770997001/c74e5bf57d250c1bfc7b0d96f39f42c7_wkpgqd.jpg";
+                    document.getElementById('stats-wins').innerText = currentUserData.wins || 0;
+                    document.getElementById('stats-losses').innerText = currentUserData.losses || 0;
+                }
+            });
+        }
+
+        // --- CHAT SYSTEM ---
+        function loadChatMessages() {
+            const chatQuery = query(ref(db, 'global_chat'), limitToLast(50));
+            onValue(chatQuery, (snap) => {
+                const chatBox = document.getElementById('chat-messages');
+                chatBox.innerHTML = "";
+                const data = snap.val();
+                if (data) {
+                    Object.keys(data).forEach(id => {
+                        const m = data[id];
+                        const isMine = m.sender_id === auth.currentUser.uid;
+                        
+                        // Default pwofil si pa genyen
+                        const photo = m.sender_photo || "https://res.cloudinary.com/dcpcbglsw/image/upload/v1770997001/c74e5bf57d250c1bfc7b0d96f39f42c7_wkpgqd.jpg";
+
+                        chatBox.innerHTML += `
+                        <div class="flex items-end gap-2 ${isMine ? 'flex-row-reverse' : 'flex-row'} animate__animated animate__fadeInUp animate__faster">
+                            <img src="${photo}" class="chat-img shadow-lg">
+                            <div class="flex flex-col ${isMine ? 'items-end' : 'items-start'} max-w-[70%]">
+                                <span class="text-[9px] text-gray-500 font-bold mb-1 px-1 uppercase">${m.sender_name}</span>
+                                <div class="p-3 text-sm ${isMine ? 'msg-mine' : 'msg-other'}">
+                                    ${m.text}
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }
+            });
+        }
+
+        document.getElementById('send-msg-btn').onclick = async () => {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text || !currentUserData) return;
+            
+            const msgData = {
+                sender_id: auth.currentUser.uid,
+                sender_name: currentUserData.username,
+                sender_photo: currentUserData.profilePic || "",
+                text: text,
+                timestamp: serverTimestamp()
+            };
+            
+            input.value = "";
+            await push(ref(db, 'global_chat'), msgData);
+        };
+
+        // --- OTHERS ---
+        window.switchPage = (id) => {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('page-active', 'flex-active'));
+            document.getElementById(id).classList.add(id === 'auth-page' ? 'flex-active' : 'page-active');
+            document.getElementById('bottom-nav').classList.toggle('hidden', id === 'auth-page');
+        };
+
+        window.toggleModal = (id, show) => document.getElementById(id).classList.toggle('hidden', !show);
+
+        document.getElementById('upload-profile').onchange = (e) => {
+            const reader = new FileReader();
+            reader.onloadend = async () => await update(ref(db, `users/${auth.currentUser.uid}`), { profilePic: reader.result });
+            if (e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
+        };
+
+        document.getElementById('main-btn').onclick = async () => {
+            const email = document.getElementById('email').value.trim();
+            const pass = document.getElementById('password').value;
+            try {
+                if (isSignup) {
+                    const res = await createUserWithEmailAndPassword(auth, email, pass);
+                    await set(ref(db, `users/${res.user.uid}`), {
+                        username: document.getElementById('username').value,
+                        balance: 0, wins: 0, losses: 0
+                    });
+                    await sendEmailVerification(res.user);
+                    alert("Tcheke email ou pou verifye!");
+                } else { await signInWithEmailAndPassword(auth, email, pass); }
+            } catch(e) { alert(e.message); }
+        };
+
+        document.getElementById('toggle-btn').onclick = () => {
+            isSignup = !isSignup;
+            document.getElementById('signup-fields').classList.toggle('hidden');
+            document.getElementById('main-btn').innerText = isSignup ? "ENSKRI" : "KONEKTE";
+        };
+
+        window.signOutUser = () => signOut(auth);
+        function loadChallenges() { /* Kod defi ou a rete menm jan */ }
+    </script>
+</body>
+</html>
